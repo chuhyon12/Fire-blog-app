@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔥 소방설비기사 기계 실기 기출</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg: #0F0E0C;
+  --bg2: #1A1915;
+  --bg3: #232218;
+  --card: #1E1D18;
+  --ink: #F0EDE6;
+  --ink2: #B8B4AC;
+  --ink3: #6A6660;
+  --red: #E8401A;
+  --red2: #FF6B40;
+  --red-pale: rgba(232,64,26,0.12);
+  --gold: #D4A520;
+  --gold-pale: rgba(212,165,32,0.1);
+  --green: #2ECC71;
+  --green-pale: rgba(46,204,113,0.12);
+  --wrong: #E74C3C;
+  --wrong-pale: rgba(231,76,60,0.12);
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+/* ── 헤더 ── */
+.header {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  position: sticky; top: 0; z-index: 50;
+}
+.header-inner {
+  max-width: 720px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 56px;
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo-flame { font-size: 22px; animation: flicker 2.5s ease-in-out infinite; }
+@keyframes flicker { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.8;transform:scale(1.08)} }
+.logo h1 { font-size: 14px; font-weight: 900; color: var(--ink); letter-spacing: -0.3px; }
+.logo p  { font-size: 10px; color: var(--ink3); margin-top: 1px; }
+.header-stats { display: flex; gap: 14px; }
+.hstat { text-align: center; }
+.hstat-num { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; line-height: 1; }
+.hstat-num.correct { color: var(--green); }
+.hstat-num.wrong   { color: var(--wrong); }
+.hstat-num.total   { color: var(--gold); }
+.hstat-label { font-size: 9px; color: var(--ink3); margin-top: 2px; letter-spacing: 0.5px; }
+
+/* ── 메인 ── */
+.main { max-width: 720px; margin: 0 auto; padding: 16px; }
+
+/* ── 필터 바 ── */
+.filter-bar {
+  display: flex; gap: 6px; overflow-x: auto;
+  padding-bottom: 4px; margin-bottom: 16px;
+  -webkit-overflow-scrolling: touch;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+.fchip {
+  flex-shrink: 0; padding: 6px 14px; border-radius: 20px;
+  border: 1px solid var(--border2); background: var(--bg3);
+  font-size: 12px; color: var(--ink2); cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif; transition: all .15s;
+  white-space: nowrap;
+}
+.fchip.on { background: var(--red); border-color: var(--red); color: #fff; }
+
+/* ── 진행 바 ── */
+.progress-wrap { margin-bottom: 16px; }
+.progress-info { display: flex; justify-content: space-between; margin-bottom: 6px; }
+.progress-info span { font-size: 11px; color: var(--ink3); font-family: 'JetBrains Mono', monospace; }
+.progress-bar { height: 4px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--red), var(--gold)); border-radius: 2px; transition: width .4s ease; }
+
+/* ── 퀴즈 카드 ── */
+.quiz-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  transition: border-color .2s;
+}
+.quiz-card.answered-correct { border-color: rgba(46,204,113,0.4); }
+.quiz-card.answered-wrong   { border-color: rgba(231,76,60,0.35); }
+
+.qcard-top {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--bg3);
+}
+.qcard-meta { display: flex; align-items: center; gap: 8px; }
+.year-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 700;
+  padding: 3px 8px; border-radius: 4px;
+  background: var(--red-pale); color: var(--red2);
+  border: 1px solid rgba(232,64,26,0.3);
+}
+.cat-badge {
+  font-size: 11px; padding: 3px 8px; border-radius: 4px;
+  background: var(--bg2); color: var(--ink3);
+  border: 1px solid var(--border);
+}
+.qnum {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--ink3);
+}
+
+.qcard-body { padding: 20px 16px; }
+.q-label { font-size: 10px; font-weight: 700; color: var(--red); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+.q-text { font-size: 16px; font-weight: 700; line-height: 1.65; color: var(--ink); margin-bottom: 20px; }
+
+/* ── 답 입력 ── */
+.answer-btn {
+  width: 100%; padding: 13px 16px;
+  background: var(--bg3); border: 1px dashed var(--border2);
+  border-radius: 10px; color: var(--ink3);
+  font-size: 14px; cursor: pointer; text-align: left;
+  font-family: 'Noto Sans KR', sans-serif; transition: all .15s;
+  display: flex; align-items: center; gap: 8px;
+}
+.answer-btn:hover { border-color: var(--red); color: var(--red2); }
+.answer-btn .btn-icon { font-size: 16px; }
+
+/* ── 정답 표시 ── */
+.answer-reveal {
+  display: none; margin-top: 12px;
+  border-radius: 10px; overflow: hidden;
+}
+.answer-reveal.show { display: block; animation: fadeUp .25s ease; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+.answer-header {
+  padding: 10px 14px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+}
+.answer-header.correct-h { background: var(--green-pale); color: var(--green); border: 1px solid rgba(46,204,113,0.25); border-radius: 10px 10px 0 0; }
+.answer-header.wrong-h   { background: var(--wrong-pale);  color: var(--wrong);  border: 1px solid rgba(231,76,60,0.25); border-radius: 10px 10px 0 0; }
+
+.answer-body {
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border); border-top: none;
+  border-radius: 0 0 10px 10px;
+}
+.answer-text { font-size: 14px; line-height: 1.9; color: var(--ink2); white-space: pre-line; }
+.answer-text .hl { color: var(--gold); font-weight: 700; }
+
+/* ── 자가채점 버튼 ── */
+.grade-btns {
+  display: flex; gap: 8px; margin-top: 14px;
+}
+.grade-btn {
+  flex: 1; padding: 11px; border-radius: 9px; border: 1px solid;
+  font-size: 13px; font-weight: 700; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif; transition: all .15s;
+}
+.grade-correct { background: var(--green-pale); border-color: rgba(46,204,113,0.35); color: var(--green); }
+.grade-wrong   { background: var(--wrong-pale);  border-color: rgba(231,76,60,0.3);  color: var(--wrong); }
+.grade-correct:active { background: rgba(46,204,113,0.25); }
+.grade-wrong:active   { background: rgba(231,76,60,0.2); }
+
+/* ── 결과 뱃지 ── */
+.result-badge {
+  display: none; padding: 8px 14px; border-radius: 8px;
+  font-size: 13px; font-weight: 700; margin-top: 12px;
+  text-align: center;
+}
+.result-badge.correct { display: block; background: var(--green-pale); color: var(--green); border: 1px solid rgba(46,204,113,0.3); }
+.result-badge.wrong   { display: block; background: var(--wrong-pale);  color: var(--wrong);  border: 1px solid rgba(231,76,60,0.25); }
+
+/* ── 완료 화면 ── */
+.done-card {
+  display: none; text-align: center; padding: 48px 20px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+}
+.done-emoji { font-size: 56px; margin-bottom: 16px; }
+.done-card h2 { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+.done-score { font-size: 48px; font-weight: 900; font-family: 'JetBrains Mono', monospace; color: var(--gold); margin: 16px 0 8px; }
+.done-card p { font-size: 14px; color: var(--ink2); margin-bottom: 24px; line-height: 1.8; }
+.btn-retry {
+  padding: 14px 32px; background: var(--red); border: none; border-radius: 12px;
+  color: #fff; font-size: 15px; font-weight: 700; cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* ── 빈 상태 ── */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--ink3); }
+.empty-state h3 { font-size: 16px; color: var(--ink2); margin: 12px 0 6px; }
+
+/* ── 모드 선택 ── */
+.mode-bar {
+  display: flex; gap: 8px; margin-bottom: 16px;
+}
+.mode-btn {
+  flex: 1; padding: 10px; border-radius: 9px;
+  border: 1px solid var(--border2); background: var(--bg3);
+  font-size: 12px; font-weight: 600; color: var(--ink2); cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif; transition: all .15s; text-align: center;
+}
+.mode-btn.on { background: var(--gold-pale); border-color: rgba(212,165,32,0.4); color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <span class="logo-flame">🔥</span>
+      <div>
+        <h1>소방설비기사 기계 실기</h1>
+        <p>10개년 기출 퀴즈 (2015~2024)</p>
+      </div>
+    </div>
+    <div class="header-stats">
+      <div class="hstat"><div class="hstat-num correct" id="s-correct">0</div><div class="hstat-label">정답</div></div>
+      <div class="hstat"><div class="hstat-num wrong"   id="s-wrong">0</div><div class="hstat-label">오답</div></div>
+      <div class="hstat"><div class="hstat-num total"   id="s-total">0</div><div class="hstat-label">전체</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="main">
+
+  <!-- 필터 -->
+  <div class="filter-bar" id="filter-bar">
+    <button class="fchip on" onclick="setFilter('all', this)">전체</button>
+    <button class="fchip" onclick="setFilter('스프링클러', this)">스프링클러</button>
+    <button class="fchip" onclick="setFilter('소화펌프', this)">소화펌프</button>
+    <button class="fchip" onclick="setFilter('옥내소화전', this)">옥내소화전</button>
+    <button class="fchip" onclick="setFilter('소화기', this)">소화기</button>
+    <button class="fchip" onclick="setFilter('가스계소화', this)">가스계</button>
+    <button class="fchip" onclick="setFilter('포소화', this)">포소화</button>
+    <button class="fchip" onclick="setFilter('기타', this)">기타</button>
+    <button class="fchip" onclick="setFilter('오답만', this)">❌ 오답만</button>
+  </div>
+
+  <!-- 모드 선택 -->
+  <div class="mode-bar">
+    <button class="mode-btn on" id="mode-all" onclick="setMode('all')">📋 전체 보기</button>
+    <button class="mode-btn" id="mode-quiz" onclick="setMode('quiz')">🎯 퀴즈 모드</button>
+  </div>
+
+  <!-- 진행 바 -->
+  <div class="progress-wrap" id="progress-wrap" style="display:none">
+    <div class="progress-info">
+      <span id="prog-text">0 / 0</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+  </div>
+
+  <!-- 카드 컨테이너 -->
+  <div id="card-container"></div>
+
+  <!-- 완료 화면 -->
+  <div class="done-card" id="done-card">
+    <div class="done-emoji" id="done-emoji">🎉</div>
+    <h2 id="done-title">퀴즈 완료!</h2>
+    <div class="done-score" id="done-score">-</div>
+    <p id="done-msg"></p>
+    <button class="btn-retry" onclick="retryAll()">🔄 다시 풀기</button>
+  </div>
+
+</div>
+
+<script>
+// ══════════════════════════════════════════
+//  기출 데이터 (2015~2024, 10개년)
+// ══════════════════════════════════════════
+const QUIZ = [
+
+// ── 2024년 ──────────────────────────────
+{ year:2024, cat:'소화펌프', q:'소화펌프 성능시험 기준에서 정격토출량의 150% 운전 시 요구되는 최소 토출압력은 정격양정의 몇 % 이상인가?', a:'65% 이상\n\n※ 성능시험 기준 정리\n• 체절운전: 정격토출압력의 140% 이하\n• 정격운전: 정격토출량의 100% → 정격양정 이상\n• 과부하운전: 정격토출량의 150% → 정격양정의 65% 이상' },
+{ year:2024, cat:'스프링클러', q:'폐쇄형 스프링클러설비에서 교차배관의 최소 구경은 몇 mm 이상이어야 하는가?', a:'40mm 이상\n\n※ 배관 구경 기준\n• 교차배관: 40mm 이상\n• 가지배관: 25mm 이상 (단, 신축형 연결 시 20mm 가능)\n• 수직배수배관: 50mm 이상' },
+{ year:2024, cat:'옥내소화전', q:'옥내소화전설비 펌프의 토출측 주배관의 구경은 유속이 몇 m/s 이하가 되도록 해야 하는가?', a:'4m/s 이하\n\n※ 배관 내 유속 기준\n• 주배관(흡입측): 3m/s 이하\n• 주배관(토출측): 4m/s 이하\n• 가지배관: 6m/s 이하' },
+{ year:2024, cat:'소화펌프', q:'압력챔버(기동용 수압개폐장치)의 최소 용량은 몇 L 이상인가?', a:'100L 이상\n\n※ 압력챔버 관련 기준\n• 용량: 100L 이상\n• 역할: 배관 내 압력 변화 감지 → 펌프 자동 기동\n• 설치위치: 펌프 토출측 체크밸브 이후' },
+{ year:2024, cat:'가스계소화', q:'이산화탄소 소화설비에서 저압식 저장용기의 충전비 기준은?', a:'충전비 1.1 이상 1.4 이하\n\n※ CO₂ 저장용기 충전비\n• 고압식: 1.5 이상 1.9 이하 (상온 저장, 15MPa 또는 25MPa)\n• 저압식: 1.1 이상 1.4 이하 (냉동 저장, -18℃ 이하 유지)\n\n충전비 = 용기 내용적(L) / 약제 중량(kg)' },
+
+// ── 2023년 ──────────────────────────────
+{ year:2023, cat:'스프링클러', q:'스프링클러 설비의 수원 산정 시 기준개수가 30개가 적용되는 장소는?', a:'랙식 창고 (Rack Storage)\n\n※ 스프링클러 기준개수\n• 10개: 일반 특정소방대상물\n• 20개: 지하층·무창층·4층 이상 (바닥면적 1,000㎡ 이상)\n        헤드 부착높이 8m 이상\n• 30개: 랙식 창고\n\n수원량 = 기준개수 × 1.6㎥' },
+{ year:2023, cat:'소화펌프', q:'옥내소화전 펌프의 전양정(H) 계산식을 쓰시오. (각 기호의 의미 포함)', a:'H = h₁ + h₂ + h₃ + 17(m)\n\n• h₁: 소방호스 마찰손실수두(m)\n• h₂: 배관 마찰손실수두(m)\n• h₃: 낙차(실양정, m)\n• 17m: 노즐 방수압력 환산수두 (0.17MPa)\n\n※ 스프링클러 전양정: H = h₁ + h₂ + h₃ + 10(m)' },
+{ year:2023, cat:'옥내소화전', q:'옥내소화전함 호스의 구경과 길이 기준은? (일반 건축물 기준)', a:'• 호스 구경: 40mm\n• 호스 길이: 15m × 2본 = 30m\n• 방수구 높이: 바닥으로부터 1.5m 이하\n• 노즐 구경: 13mm\n\n※ 아파트(4층 이상) 예외: 구경 25mm 호스 사용 가능' },
+{ year:2023, cat:'스프링클러', q:'스프링클러헤드 표시온도에 따른 색상을 5가지 이상 쓰시오.', a:'• 57℃: 무색(색표시 없음)\n• 68℃: 붉은색\n• 79℃: 황색\n• 93℃: 녹색\n• 121℃: 파란색\n• 141℃: 자주색(보라색)\n• 163℃ 이상: 검정색' },
+{ year:2023, cat:'가스계소화', q:'CO₂ 소화설비 전역방출방식에서 표면화재의 약제 방출시간 기준은?', a:'1분 이내\n\n※ CO₂ 방출시간 기준\n• 표면화재(가연성 액체, 가스): 1분 이내\n• 심부화재(목재, 종이, 석탄 등): 7분 이내\n• 국소방출방식: 30초 이내' },
+
+// ── 2022년 ──────────────────────────────
+{ year:2022, cat:'스프링클러', q:'준비작동식 스프링클러설비를 설치하여야 하는 장소 3가지를 쓰시오.', a:'① 동파 우려 장소 (냉동창고, 영하의 환경)\n② 수손 피해 우려 장소 (전산실, 전기실, 서고, 박물관)\n③ 헤드 오작동 시 피해가 큰 장소\n\n※ 준비작동식: 1차측 물, 2차측 공기(대기압)\n   화재감지기 2개 이상 동작 시 밸브 개방' },
+{ year:2022, cat:'소화펌프', q:'소화펌프 체절운전(무부하 운전) 시 펌프 보호를 위해 설치하는 장치와 그 역할은?', a:'순환배관(릴리프밸브)\n\n• 설치 목적: 체절운전 시 발생하는 과압으로부터 펌프 보호\n• 작동 원리: 토출측 압력이 체절압력(정격의 140%) 초과 시 자동 개방하여 물을 흡입측으로 환류\n• 설치 위치: 펌프 토출측 체크밸브 이전 분기' },
+{ year:2022, cat:'옥내소화전', q:'옥외소화전설비의 방수량, 방수압력, 수원 산정 기준개수를 쓰시오.', a:'• 방수량: 350L/min 이상\n• 방수압력: 0.25MPa 이상\n• 수원 기준개수: 최대 2개\n• 수원량: 기준개수 × 7㎥\n• 보행거리: 40m 이내\n• 노즐 구경: 19mm' },
+{ year:2022, cat:'가스계소화', q:'할론소화설비를 대체하는 할로겐화합물 소화약제 HFC-227ea의 설계농도는?', a:'7.0% 이상\n\n※ 주요 청정소화약제 설계농도\n• HFC-227ea (FM-200): 7.0%\n• HFC-23: 14.5%\n• FK-5-1-12 (Novec 1230): 4.2%\n• IG-541 (Inergen): 36%\n\n설계농도 = 소화농도 × 1.2(안전계수)' },
+{ year:2022, cat:'스프링클러', q:'스프링클러헤드를 설치하지 않아도 되는 장소 4가지를 쓰시오.', a:'① 계단실, 경사로, 승강기 승강로\n② 목욕실, 욕실, 화장실, 수영장 관람석 제외\n③ 통신기기실, 전자기기실\n④ 발전실, 변전실, 변압기실\n⑤ 직접 외기에 개방된 복도\n⑥ 천장·반자 양쪽 높이 차이 1m 미만인 가연물 없는 공간' },
+
+// ── 2021년 ──────────────────────────────
+{ year:2021, cat:'소화기', q:'소화기 설치기준에서 소형 소화기의 보행거리와 대형 소화기의 보행거리 기준을 쓰시오.', a:'• 소형 소화기: 보행거리 20m 이내\n• 대형 소화기: 보행거리 30m 이내\n\n※ 능력단위 기준\n• 일반 건물: 연면적 100㎡마다 1단위\n• 내화구조+불연재: 200㎡마다 1단위' },
+{ year:2021, cat:'스프링클러', q:'폐쇄형 스프링클러설비의 헤드 하나당 방호면적과 정방형 배치 시 헤드 간 수평거리 기준은? (일반 내화구조 기준)', a:'• 방호면적: 9.0㎡ 이하\n• 헤드 간 수평거리: 2.3m 이하\n• 벽과의 거리: 헤드 간 거리의 1/2 이하\n\n※ 특수장소 기준\n• 무대부: 방호면적 9.0㎡, 간격 1.7m\n• 랙식창고: 방호면적 6.0㎡, 간격 2.5m' },
+{ year:2021, cat:'소화펌프', q:'가압송수장치의 종류 4가지를 쓰시오.', a:'① 전동기 또는 내연기관으로 펌프 구동\n② 고가수조 방식 (자연낙차 이용)\n③ 압력수조 방식 (압축공기로 가압)\n④ 가압수조 방식\n\n※ 가장 많이 사용: 전동기 구동 펌프\n보조: 충압펌프(압력 유지용) 별도 설치' },
+{ year:2021, cat:'포소화', q:'포소화설비의 팽창비에 따른 분류와 각 팽창비 범위를 쓰시오.', a:'• 저발포: 팽창비 20 이하\n• 고발포 1종: 팽창비 80 이상 250 미만\n• 고발포 2종: 팽창비 250 이상 500 미만\n• 고발포 3종: 팽창비 500 이상 1,000 이하\n\n※ 주차장·항공기격납고: 저발포 사용\n   지하층·지하가: 고발포 사용 가능' },
+{ year:2021, cat:'가스계소화', q:'CO₂ 소화설비에서 고압식 저장용기의 충전비 기준과 저장압력 기준을 쓰시오.', a:'• 충전비: 1.5 이상 1.9 이하\n• 저장압력: 15MPa 또는 25MPa\n• 저장온도: 상온 (40℃ 이하 유지)\n\n※ 저압식 비교\n• 충전비: 1.1 이상 1.4 이하\n• 저장온도: -18℃ 이하 (냉동 보관)\n• 저장압력: 2.1MPa 유지' },
+
+// ── 2020년 ──────────────────────────────
+{ year:2020, cat:'스프링클러', q:'습식 유수검지장치(알람밸브)의 구조와 2차측에 연결되는 장치를 설명하시오.', a:'구조:\n• 1차측(공급측): 가압수 항상 충전\n• 2차측(헤드측): 가압수 항상 충전\n• 헤드 개방 → 압력차 발생 → 알람밸브 개방\n\n2차측 연결 장치:\n• 압력스위치: 유수 감지, 펌프 기동 신호\n• 유수검지장치 경보: 워터모터공 또는 전기식\n• 리타딩챔버: 오경보 방지 (압력 완충)' },
+{ year:2020, cat:'옥내소화전', q:'옥내소화전설비 수원의 저수량 산정 기준을 쓰시오. (층수 29층 이하 기준)', a:'수원량 = 설치개수(최대 5개) × 2.6㎥\n\n예시:\n• 1~2개 설치: 해당 개수 × 2.6㎥\n• 3개 이상: 5 × 2.6 = 13㎥\n\n※ 30층 이상: 최대 5개 × 5.2㎥\n   50층 이상: 최대 5개 × 7.8㎥' },
+{ year:2020, cat:'소화펌프', q:'충압펌프(보조펌프)의 설치 목적과 정격토출량 기준을 쓰시오.', a:'설치 목적:\n배관 내 소량 누수 등으로 압력 저하 시 자동 충압하여 주펌프의 불필요한 기동 방지\n\n정격토출량:\n정격토출량이 주펌프의 1/3 이하\n\n정격토출압력:\n주펌프의 최고 사용압력 이상' },
+{ year:2020, cat:'스프링클러', q:'ESFR(조기반응형) 스프링클러헤드의 RTI(반응시간지수) 기준과 주요 적용 장소는?', a:'RTI: 50(m·s)^0.5 이하\n\n주요 적용 장소:\n• 물류창고, 랙식 창고\n• 천장 높이 13.7m 이하\n\n특징:\n• 큰 물방울, 고압 방사\n• 화재 초기 직접 제어\n• 방수압력: 0.1MPa 이상' },
+{ year:2020, cat:'가스계소화', q:'가스계 소화설비의 자동기동 조건과 방출 전 경보 기준을 쓰시오.', a:'자동기동 조건:\n화재감지기 2개 이상 동시 동작\n(교차회로방식 적용)\n\n방출 전 경보 기준:\n• 음향경보: 방출 20초 전 이상\n• 방출표시등: 출입구 상부 설치\n• 자동폐쇄장치: 환기·공조 차단\n• 비상정지스위치: 지연 중 방출 취소 가능' },
+
+// ── 2019년 ──────────────────────────────
+{ year:2019, cat:'스프링클러', q:'건식 스프링클러설비에서 2차측 배관에 채우는 기체의 종류와 건식밸브의 1·2차측 구성을 설명하시오.', a:'2차측 기체: 질소 또는 압축공기\n\n건식밸브 구성:\n• 1차측: 가압수(물)\n• 2차측: 압축공기(질소)\n\n설치 이유:\n동결 우려 장소에 사용\n(헤드 개방 → 공기 방출 → 밸브 개방 → 살수)' },
+{ year:2019, cat:'소화기', q:'대형소화기의 종류별 충전량 기준을 쓰시오.', a:'• 분말소화기(A급): 20kg 이상\n• 분말소화기(B급): 10kg 이상\n• 이산화탄소: 50kg 이상\n• 할론: 30kg 이상\n• 포소화기: 20L 이상\n• 강화액: 60L 이상' },
+{ year:2019, cat:'포소화', q:'포소화설비 차고·주차장에 적용하는 포헤드의 방사밀도 기준은?', a:'20L/min·㎡ 이상\n\n※ 장소별 방사밀도\n• 차고·주차장: 20L/min·㎡\n• 항공기격납고: 6.5L/min·㎡ (바닥면적 기준)\n• 특수가연물: 10L/min·㎡\n\n※ 물분무소화설비 방사밀도\n• 차고·주차장: 20L/min·㎡\n• 절연유 봉입변압기: 10L/min·㎡' },
+{ year:2019, cat:'옥내소화전', q:'호스릴 옥내소화전설비의 방수량, 방수압력, 호스구경을 쓰시오.', a:'• 방수량: 60L/min 이상\n• 방수압력: 0.17MPa 이상\n• 호스 구경: 25mm\n• 노즐 구경: 8mm\n• 설치 간격: 수평거리 25m 이내\n\n※ 일반 옥내소화전과 비교\n• 방수량: 130L/min → 60L/min (절반 이하)\n• 경량·소형으로 비전문가도 사용 용이' },
+{ year:2019, cat:'소화펌프', q:'소화펌프 토출측에 설치하는 주요 밸브·장치 5가지를 쓰시오.', a:'① 개폐표시형 밸브 (게이트밸브 등)\n② 체크밸브 (역류 방지)\n③ 성능시험배관 (유량계 + 개폐밸브)\n④ 순환배관 (릴리프밸브 포함, 체절운전 보호)\n⑤ 물올림장치 (수원이 펌프보다 낮을 때)\n⑥ 압력계 및 연성계' },
+
+// ── 2018년 ──────────────────────────────
+{ year:2018, cat:'스프링클러', q:'스프링클러설비에서 유수검지장치의 종류 4가지를 쓰시오.', a:'① 습식 유수검지장치 (알람밸브)\n   - 1·2차측 모두 가압수\n② 건식 유수검지장치 (드라이밸브)\n   - 1차측 물, 2차측 압축공기\n③ 준비작동식 유수검지장치\n   - 1차측 물, 2차측 대기압 공기\n   - 화재감지기 신호 + 헤드 개방 시 방수\n④ 일제개방밸브 (델류지밸브)\n   - 개방형 헤드 사용, 일제 방수' },
+{ year:2018, cat:'소화기', q:'소화기 능력단위 산정 시 연면적 기준을 쓰시오. (3가지 경우)', a:'① 일반 건물: 연면적 100㎡마다 1단위\n② 내화구조 + 불연재료: 200㎡마다 1단위\n③ 가연성 높은 곳(목조건물 등): 50㎡마다 1단위\n\n추가 기준:\n• 보조 소화기(각층): 2단위 이상\n• 주방용: 능력단위와 별도 설치' },
+{ year:2018, cat:'가스계소화', q:'CO₂ 소화설비에서 방호구역의 개구부 자동폐쇄장치 설치 기준을 쓰시오.', a:'• 약제 방출 전 자동으로 폐쇄되어야 함\n• 환기장치, 공조기기: 연동 정지\n• 방출표시등: 출입구 상부 또는 보기 쉬운 곳\n• 방호구역 출입문: 자동폐쇄(내압 방출구 설치 가능)\n• 개구부 면적: 방호구역 전체 벽면적의 1% 이하' },
+{ year:2018, cat:'스프링클러', q:'폐쇄형 스프링클러 수원 산정식을 쓰고, 지하층·무창층의 기준개수를 적용한 수원량을 계산하시오.', a:'수원량 = 기준개수 × 1.6㎥\n\n지하층·무창층 기준개수: 20개\n수원량 = 20 × 1.6 = 32㎥\n\n※ 기준개수 정리\n• 일반: 10개 → 16㎥\n• 지하층·무창층·4층 이상·8m 이상: 20개 → 32㎥\n• 랙식창고: 30개 → 48㎥' },
+{ year:2018, cat:'포소화', q:'포소화약제의 종류를 혼합비율에 따라 분류하시오.', a:'• 1% 형: 수성막포 (AFFF 등 고성능)\n• 3% 형: 합성계면활성제포, 수성막포\n• 6% 형: 단백포, 불화단백포, 합성계면활성제포\n\n※ 사용 용도별\n• 단백포: 유류화재 (유면 봉쇄 우수)\n• 수성막포(AFFF): 유류화재 (유동성 우수)\n• 알코올형포: 수용성 위험물 화재' },
+
+// ── 2017년 ──────────────────────────────
+{ year:2017, cat:'스프링클러', q:'간이스프링클러설비의 방수량과 방수압력 기준을 쓰시오.', a:'• 방수량: 50L/min 이상\n• 방수압력: 0.1MPa 이상\n• 최대압력: 1.2MPa 이하\n\n※ 일반 스프링클러와 비교\n• 일반: 80L/min, 0.1MPa 이상\n• 간이: 50L/min, 0.1MPa 이상\n\n적용 장소: 근린생활시설, 숙박시설 등 소규모 건물' },
+{ year:2017, cat:'소화펌프', q:'물올림장치(프라이밍 장치)의 설치 목적과 구성요소를 쓰시오.', a:'설치 목적:\n수원이 펌프보다 낮은 위치에 있을 때 펌프 기동 전 흡입관에 물을 채워 펌프가 정상 작동하도록 함\n\n구성요소:\n• 물올림탱크: 100L 이상\n• 수위감지장치: 물 부족 시 자동 보충\n• 체크밸브: 물 역류 방지\n• 자동급수장치: 물올림탱크 수위 유지' },
+{ year:2017, cat:'옥내소화전', q:'옥내소화전설비 방수구의 설치 높이 기준과 방수구 간 수평거리 기준을 쓰시오.', a:'• 방수구 높이: 바닥으로부터 1.5m 이하\n• 수평거리: 25m 이내 (어느 층 부분도)\n• 방수구 개폐밸브: 바닥으로부터 0.8~1.5m 높이\n\n※ 복층구조:\n각 층마다 설치\n(계단실, 비상구 인근 우선 설치)' },
+{ year:2017, cat:'가스계소화', q:'할론 1301 소화약제의 특성과 현재 신규 설치가 제한되는 이유를 설명하시오.', a:'특성:\n• 화학식: CF₃Br\n• 소화효과: 부촉매 소화(연쇄반응 억제)\n• 인체 독성: 낮음 (안전)\n• 전기절연성: 우수\n\n신규 설치 제한 이유:\n오존층 파괴물질(ODS)로 몬트리올 의정서에 의해 생산·수입 금지\n\n대체물질: HFC-227ea, HFC-23, FK-5-1-12' },
+{ year:2017, cat:'소화기', q:'자동소화장치(자동확산소화기)와 일반 소화기의 차이점을 설명하시오.', a:'자동확산소화기:\n• 화재열에 의해 자동으로 약제 방출 (사람 없이 작동)\n• 설치 위치: 방호대상물 상부에 고정\n• 주용도: 전기실, 발전기실, 주방 후드 내부\n• 약제량: 소형 (2kg 이하)\n\n일반 소화기:\n• 사람이 직접 조작 필요\n• 이동식 (받침대 또는 고정)\n• 수동 작동' },
+
+// ── 2016년 ──────────────────────────────
+{ year:2016, cat:'스프링클러', q:'드렌처(Drencher)설비의 설치 목적과 방수량·헤드 간격 기준을 쓰시오.', a:'설치 목적:\n인접 건물 화재로부터 연소 차단 (방화용 수막 형성)\n\n기준:\n• 헤드 간격: 2.5m 이하\n• 방수량: 80L/min 이상 (헤드 1개당)\n• 방수압력: 0.1MPa 이상\n• 수원: 헤드 수 × 1.6㎥' },
+{ year:2016, cat:'소화펌프', q:'소화펌프 흡입측 배관에서 수조와 펌프 사이에 설치하는 장치들을 쓰시오.', a:'① 개폐밸브 (게이트밸브 - 항상 열림 유지)\n② 스트레이너 (여과망 - 이물질 제거)\n③ 연성계 (진공계 겸용 - 흡입압력 측정)\n④ 수온 상승 방지용 순환배관 (필요 시)\n\n※ 흡입측 배관 주의사항\n• 공기 고임 방지: 수평 또는 펌프향 상향 구배\n• 구경: 토출측보다 크게 설계' },
+{ year:2016, cat:'포소화', q:'옥외 포소화설비에서 고정포방출구의 종류 2가지와 각 특징을 쓰시오.', a:'① Ⅰ형 (표면하 주입방식)\n• 포를 탱크 바닥에서 주입\n• 원유, 중질유 등 고점도 유류에 적합\n• 수용성 위험물에 사용 가능\n\n② Ⅱ형 (표면상 주입방식)\n• 포를 탱크 액면 위에 방출\n• 경질유(휘발유 등) 화재에 적합\n• 수용성에는 사용 불가\n\n③ 특형 (반고정식)\n• 플로팅루프탱크 전용\n• 지붕 위 방출' },
+{ year:2016, cat:'가스계소화', q:'이산화탄소 소화설비의 국소방출방식 소화약제량 산정 시 적용 기준을 쓰시오.', a:'면적식:\n방호대상물 표면적(㎡) × 약제량(kg/㎡)\n\n체적식:\n방호공간 체적(㎥) × 약제량(kg/㎥) × 방호계수\n\n방출시간: 30초 이내\n\n주요 적용 장소:\n• 연소 우려가 있는 개구부가 많은 장소\n• 전역방출이 어려운 부분적 보호 대상' },
+{ year:2016, cat:'스프링클러', q:'조기반응형(Fast Response) 스프링클러헤드와 표준반응형(Standard Response) 헤드의 RTI 기준 비교', a:'• 조기반응형(Fast Response): RTI 50(m·s)^0.5 이하\n• 특수반응형(Special Response): RTI 80(m·s)^0.5 이하\n• 표준반응형(Standard Response): RTI 350(m·s)^0.5 이하\n\nRTI = r × √u (r: 감응시간지수, u: 기류속도)\n\n낮을수록 빠른 반응 → 조기반응형이 가장 빠름' },
+
+// ── 2015년 ──────────────────────────────
+{ year:2015, cat:'스프링클러', q:'폐쇄형 스프링클러헤드의 표준형과 조기반응형의 방수량·방수압력 기준을 비교하여 쓰시오.', a:'표준형 (Standard):\n• 방수량: 80L/min 이상\n• 방수압력: 0.1MPa 이상\n• 최대압력: 1.2MPa 이하\n\n조기반응형 (ESFR/Fast Response):\n• 방수량: 80L/min 이상 (동일)\n• 방수압력: 0.1MPa 이상 (동일)\n• RTI: 50(m·s)^0.5 이하 (더 빠른 반응)' },
+{ year:2015, cat:'소화펌프', q:'연결송수관설비 방수구의 설치 기준(높이, 형태, 압력)을 쓰시오.', a:'• 설치 위치: 각층 계단실 부근\n• 방수구 높이: 바닥으로부터 0.5m 이상 1.0m 이하\n• 쌍구형: 연면적 3,000㎡ 이상 또는 지하층\n• 단구형: 그 외\n• 방수압력: 0.35MPa 이상 (최대 0.7MPa)\n• 방수량: 400L/min 이상' },
+{ year:2015, cat:'소화기', q:'주거용 주방자동소화장치의 설치 기준과 연동 차단 장치를 쓰시오.', a:'설치 기준:\n• 아파트 등 공동주택 주방 필수 설치\n• 감지부: 가스레인지 전면 상부 1m 이내\n• 방출구: 후드(환기구) 하부에 설치\n\n연동 차단 장치:\n• 가스차단밸브 자동 차단 (가스 공급 차단)\n• 경보장치 동작\n• 소화약제: 분말 또는 강화액' },
+{ year:2015, cat:'포소화', q:'포소화설비에서 프로포셔너(Proportioner)의 역할과 종류 3가지를 쓰시오.', a:'역할:\n물과 포원액을 일정 비율로 혼합하여 포수용액 만들기\n\n종류:\n① 라인 프로포셔너: 배관 내 벤투리관 이용\n② 펌프 프로포셔너: 펌프 회전 이용\n③ 압입 프로포셔너: 별도 압력으로 원액 주입\n④ 프레셔 사이드 프로포셔너: 가압원액 탱크 이용\n\n혼합비율: 약제 종류에 따라 1%, 3%, 6%' },
+{ year:2015, cat:'가스계소화', q:'CO₂ 소화설비에서 심부화재(deep-seated fire) 적용 장소의 예와 약제 방출시간 기준은?', a:'심부화재 적용 장소:\n• 종이, 목재, 석탄, 섬유류 저장소\n• 서고, 전산실 (종이 미디어)\n• 목재가공공장\n\n약제 방출시간:\n7분 이내\n(표면화재 1분 이내와 비교)\n\n이유: 내부까지 소화약제 침투에 시간 필요\n소화농도: 최소 설계농도 34% 이상 유지' },
+
+];
+
+// ══════════════════════════════════════════
+//  상태 변수
+// ══════════════════════════════════════════
+let currentFilter = 'all';
+let currentMode   = 'all';  // 'all' | 'quiz'
+let quizList      = [];
+let quizIdx       = 0;
+let scores        = { correct: 0, wrong: 0 };
+let answered      = {};   // id → 'correct'|'wrong'
+
+function getFiltered() {
+  let list = QUIZ.map((q, i) => ({ ...q, id: i }));
+  if (currentFilter === '오답만') return list.filter(q => answered[q.id] === 'wrong');
+  if (currentFilter !== 'all')   return list.filter(q => q.cat === currentFilter);
+  return list;
+}
+
+// ── 필터 ──
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.fchip').forEach(c => c.classList.remove('on'));
+  el.classList.add('on');
+  resetState();
+  render();
+}
+
+// ── 모드 ──
+function setMode(m) {
+  currentMode = m;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('on'));
+  document.getElementById('mode-' + m).classList.add('on');
+  resetState();
+  render();
+}
+
+function resetState() {
+  quizIdx = 0;
+  if (currentMode === 'quiz') {
+    quizList = shuffle([...getFiltered()]);
+    scores = { correct: 0, wrong: 0 };
+  }
+  document.getElementById('done-card').style.display = 'none';
+  updateStats();
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ── 렌더링 ──
+function render() {
+  const container = document.getElementById('card-container');
+  const doneCard  = document.getElementById('done-card');
+  const progWrap  = document.getElementById('progress-wrap');
+
+  if (currentMode === 'quiz') {
+    progWrap.style.display = 'block';
+    container.innerHTML = '';
+    if (quizList.length === 0) {
+      container.innerHTML = `<div class="empty-state"><div style="font-size:40px">📭</div><h3>표시할 문제가 없어요</h3><p style="font-size:13px;color:var(--ink3);margin-top:6px">다른 카테고리를 선택해보세요</p></div>`;
+      return;
+    }
+    if (quizIdx >= quizList.length) { showDone(); return; }
+    const q = quizList[quizIdx];
+    updateProgress();
+    container.innerHTML = makeCard(q, quizIdx, true);
+  } else {
+    progWrap.style.display = 'none';
+    const list = getFiltered();
+    if (list.length === 0) {
+      container.innerHTML = `<div class="empty-state"><div style="font-size:40px">📭</div><h3>표시할 문제가 없어요</h3></div>`;
+      return;
+    }
+    container.innerHTML = list.map((q, i) => makeCard(q, i, false)).join('');
+  }
+}
+
+function makeCard(q, idx, quizMode) {
+  const statusClass = answered[q.id] ? (answered[q.id] === 'correct' ? 'answered-correct' : 'answered-wrong') : '';
+  const answerShown = !quizMode && answered[q.id]; // 전체보기면 이미 본 것은 펼쳐둠
+
+  return `
+  <div class="quiz-card ${statusClass}" id="card-${q.id}">
+    <div class="qcard-top">
+      <div class="qcard-meta">
+        <span class="year-badge">${q.year}년</span>
+        <span class="cat-badge">${q.cat}</span>
+      </div>
+      <span class="qnum">${quizMode ? `${quizIdx + 1} / ${quizList.length}` : `#${idx + 1}`}</span>
+    </div>
+    <div class="qcard-body">
+      <div class="q-label">QUESTION</div>
+      <div class="q-text">${q.q.replace(/\n/g, '<br>')}</div>
+
+      <button class="answer-btn" id="abtn-${q.id}" onclick="toggleAnswer(${q.id})">
+        <span class="btn-icon">👉</span>
+        <span>정답 보기</span>
+      </button>
+
+      <div class="answer-reveal ${answerShown ? 'show' : ''}" id="ans-${q.id}">
+        <div class="answer-header correct-h">✅ ANSWER</div>
+        <div class="answer-body">
+          <div class="answer-text">${formatAnswer(q.a)}</div>
+        </div>
+      </div>
+
+      <div class="grade-btns" id="grade-${q.id}" style="${answered[q.id] ? 'display:none' : ''}">
+        <button class="grade-btn grade-correct" onclick="grade(${q.id}, 'correct', ${quizMode})">✅ 알았어요</button>
+        <button class="grade-btn grade-wrong"   onclick="grade(${q.id}, 'wrong',   ${quizMode})">❌ 몰랐어요</button>
+      </div>
+
+      <div class="result-badge ${answered[q.id] || ''}" id="badge-${q.id}">
+        ${answered[q.id] === 'correct' ? '✅ 정답 · 잘 하셨어요!' : answered[q.id] === 'wrong' ? '❌ 오답 · 다시 확인해요!' : ''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function formatAnswer(text) {
+  return text
+    .replace(/\n/g, '<br>')
+    .replace(/([\d.]+(?:MPa|L\/min|㎡|㎥|mm|m|kg|℃|%|L)[^\s<,]*)/g, '<span class="hl">$1</span>');
+}
+
+function toggleAnswer(id) {
+  const box = document.getElementById(`ans-${id}`);
+  const btn = document.getElementById(`abtn-${id}`);
+  const isShown = box.classList.toggle('show');
+  btn.querySelector('span:last-child').textContent = isShown ? '정답 닫기' : '정답 보기';
+  btn.querySelector('.btn-icon').textContent = isShown ? '🔼' : '👉';
+}
+
+function grade(id, result, quizMode) {
+  answered[id] = result;
+  if (result === 'correct') scores.correct++;
+  else scores.wrong++;
+
+  // 카드 스타일 업데이트
+  const card = document.getElementById(`card-${id}`);
+  if (card) {
+    card.classList.remove('answered-correct', 'answered-wrong');
+    card.classList.add(result === 'correct' ? 'answered-correct' : 'answered-wrong');
+  }
+  document.getElementById(`grade-${id}`).style.display = 'none';
+  const badge = document.getElementById(`badge-${id}`);
+  badge.className = `result-badge ${result}`;
+  badge.textContent = result === 'correct' ? '✅ 정답 · 잘 하셨어요!' : '❌ 오답 · 다시 확인해요!';
+
+  // 정답 표시
+  document.getElementById(`ans-${id}`).classList.add('show');
+
+  updateStats();
+
+  if (quizMode) {
+    setTimeout(() => {
+      quizIdx++;
+      render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 900);
+  }
+}
+
+function updateStats() {
+  document.getElementById('s-correct').textContent = scores.correct;
+  document.getElementById('s-wrong').textContent   = scores.wrong;
+  const total = currentMode === 'quiz' ? quizList.length : getFiltered().length;
+  document.getElementById('s-total').textContent   = total;
+}
+
+function updateProgress() {
+  const total = quizList.length;
+  const done  = quizIdx;
+  const pct   = total > 0 ? Math.round(done / total * 100) : 0;
+  document.getElementById('prog-text').textContent = `${done} / ${total}`;
+  document.getElementById('prog-pct').textContent  = pct + '%';
+  document.getElementById('prog-fill').style.width = pct + '%';
+}
+
+function showDone() {
+  document.getElementById('card-container').innerHTML = '';
+  const total   = quizList.length;
+  const correct = scores.correct;
+  const pct     = Math.round(correct / total * 100);
+  let emoji = '🎉', title = '퀴즈 완료!', msg = '';
+
+  if (pct >= 90)      { emoji = '🏆'; title = '완벽해요!'; msg = '소방설비기사 합격 확실! 실력이 대단해요 🔥'; }
+  else if (pct >= 70) { emoji = '👍'; title = '잘 하셨어요!'; msg = '조금만 더 복습하면 합격권이에요!'; }
+  else if (pct >= 50) { emoji = '📚'; title = '더 공부해요!'; msg = '오답 문제 위주로 다시 풀어보세요.'; }
+  else                { emoji = '💪'; title = '파이팅!'; msg = '처음엔 누구나 어려워요. 꾸준히 하면 돼요!'; }
+
+  document.getElementById('done-emoji').textContent = emoji;
+  document.getElementById('done-title').textContent = title;
+  document.getElementById('done-score').textContent = `${correct} / ${total}`;
+  document.getElementById('done-msg').innerHTML = `정답률 <strong style="color:var(--gold)">${pct}%</strong><br>${msg}`;
+  document.getElementById('done-card').style.display = 'block';
+  document.getElementById('done-card').scrollIntoView({ behavior: 'smooth' });
+}
+
+function retryAll() {
+  scores = { correct: 0, wrong: 0 };
+  answered = {};
+  quizIdx = 0;
+  quizList = shuffle([...getFiltered()]);
+  document.getElementById('done-card').style.display = 'none';
+  updateStats();
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 초기화
+resetState();
+render();
+</script>
+</body>
+</html>
